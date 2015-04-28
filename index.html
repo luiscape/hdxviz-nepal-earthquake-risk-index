@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="http/css/vendor/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="http/css/style.css">
+    <link rel="stylesheet" type="text/css" href="http/css/dc.css">
+    <!-- <script type="text/javascript" src="http/js/pace.min.js"></script> -->
+    <script type="text/javascript" src="http/js/jquery.js"></script>
+    <script type="text/javascript" src="http/js/d3.min.js"></script>
+    <script type="text/javascript" src="http/js/crossfilter.v1.min.js"></script>
+    <script type="text/javascript" src="http/js/dc.js"></script>
+    <script type="text/javascript" src="http/data/dados_semana.js"></script>
+    <script type="text/javascript" src="http/data/estado.js"></script>
+    <script type="text/javascript" src="http/data/macroregioes.js"></script>
+    <script type="text/javascript" src="http/data/municipios.js"></script>
+    <link rel="stylesheet" href="//brick.a.ssl.fastly.net/EB+Garamond:400,400i/Open+Sans:400,700">
+    <title>Painel das Secas - MGov</title>
+</head>
+<style>
+</style>
+
+<body>
+    <div class="top-bar"></div>
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10">
+        <div class="row">
+            <h1 class="title">Expectativa de Chuva no Ceará</h1>
+            <div id="count-info" class="sub-title">
+                <span class="filter-count"></span> de <span class="total-count"></span> observações selecionadas.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 no-padding">
+                <a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Limpar Seleção</a>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="row no-padding">
+                <div class='col-xs-4 no-padding'>
+                    <h4>Respostas por Semana</h4>
+                    <div id="semanas"></div>
+                </div>
+                <div class='col-xs-4' style="text-align:center;">
+                    <h4>Resumo das Respostas</h4>
+                    <div id="respostas"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4" style="text-align:center;">
+                    <h4>Mapa das Respostas</h4>
+                    <div id="mapa"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-1"></div>
+    <script type="text/javascript" src="http/js/app.js"></script>
+</body>
