@@ -43,6 +43,7 @@ def CreateJson(data, output):
       json.dump(data, outfile)
 
     print "JSON file stored successfully."
+    print "JSON PATH: %s" % output
     return
 
   except Exception as e:
@@ -53,8 +54,8 @@ def CreateJson(data, output):
 def Main():
   '''Wrapper.'''
 
-  data = LoadData('data/results/all_data.csv')
-  CreateJson(data=data, output='http/data/week_data.json')
+  data = LoadData('data/tabular/index.csv')
+  CreateJson(data=data, output='http/data/index_data.json')
 
 if __name__ == '__main__':
   Main()
