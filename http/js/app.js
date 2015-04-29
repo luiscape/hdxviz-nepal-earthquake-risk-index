@@ -1,6 +1,6 @@
+var region_chart            = dc.rowChart("#region");
 var categories_pie          = dc.pieChart("#categories");
-// var vulnerability_series    = dc.rowChart("#vulnerability");
-var region_chart          = dc.rowChart("#region");
+var vulnerability_series    = dc.barChart("#vulnerability");
 var adm4_map                = dc.geoChoroplethChart("#map");
 
 var cf = crossfilter(data);
@@ -9,26 +9,28 @@ var map_scale = 5000;
 
 // Defining the cross-filter dimensions.
 cf.pcode = cf.dimension(function(d){ return d.P_CODE });
-// cf.severity = cf.dimension(function(d){ return d.Severity });
+cf.severity = cf.dimension(function(d){ return d.Severity });
 cf.region = cf.dimension(function(d){ return d.REGION });
+cf.population = cf.dimension(function(d){ return d.POP_2011 });
 cf.category = cf.dimension(function(d){ return d["Severity category"]; });
 
 // Organizing the cross-filter groups.
 var all = cf.groupAll();
 var pcode = cf.pcode.group();
-// var severity = cf.severity.group();
 var region = cf.region.group();
 var category = cf.category.group();
+var severity = cf.severity.group();
+var population = cf.population.group();
 
-// vulnerability_series.width(260).height(220)
-//         .margins({top: 20, left: 3, right: 10, bottom: 20})
-//         .dimension(cf.severity)
-//         .group(severity)
-//         .colors(['#2c3e50'])
-//         .colorDomain([0,1])
-//         .elasticX(true)
-//         // .filter("Semana 6")
-//         .colorAccessor(function(d, i){return i%1;});
+
+vulnerability_series.width(400).height(300)
+        .x(d3.scale.linear().domain([0,10]))
+        .brushOn(false)
+        .dimension(cf.severity)
+        .elasticY(true)
+        .centerBar(true)
+        .gap(10)
+        .group(severity);
 
 region_chart.width(400).height(300)
         .margins({top: 20, left: 3, right: 10, bottom: 20})
@@ -36,7 +38,7 @@ region_chart.width(400).height(300)
         .group(region)
         .colors(['#2c3e50'])
         .colorDomain([0,1])
-        // .elasticX(true)
+        // .filter('Central')
         .colorAccessor(function(d, i){return i%1;});
 
 categories_pie.width(260).height(200)
@@ -54,9 +56,10 @@ categories_pie.width(260).height(200)
 dc.dataCount("#count-info")
     .dimension(cf)
     .group(all);
-        
+
+// Map
 adm4_map.width(800).height(450)
-        .dimension(cf.dimension)
+        .dimension(cf.pcode)
         .group(pcode)
         .colors(['#ecf0f1', '#16a085'])
         .colorDomain([0, 1])
