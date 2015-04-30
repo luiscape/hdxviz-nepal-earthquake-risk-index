@@ -150,3 +150,8 @@ h5 {
 .dc-chart .axis.y { 
   opacity: 0.0;
 }
+
+
+.left-col-spacing {
+  width: 3% !important;
+}
