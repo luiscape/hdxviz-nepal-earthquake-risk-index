@@ -1,5 +1,7 @@
 ## Multi-dimensional Visualization of Nepal's Risk Index
 
+![screengrab](screengrab.png "Screengrab")
+
 ## Data Sources
 This visualization uses data sources available on the [Humanitarian Data Exchange](https://data.hdx.rwlabs.org/group/nepal-earthquake) site. The breakdown of sources are:
 
