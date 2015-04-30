@@ -24,42 +24,67 @@
     <div class="top-bar"></div>
     <div class="col-xs-1"></div>
     <div class="col-xs-10">
-        <div class="row">
-            <h1 class="title">Nepal Earthquake - Risk Index</h1>
-            <div id="count-info" class="sub-title">
-                <span class="filter-count"></span> de <span class="total-count"></span> selected observations.
+        <div class="col-xs-8 no-padding">
+            <div class="row">
+                <h1 class="title">The Nepal Earthquake Severity Index</h1>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-2 no-padding">
-                <a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Clear Selection</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4" style="text-align:center;">
+            <div class="row">
                 <div id="map"></div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="row no-padding">
-                <div class='col-xs-3 no-padding'>
-                    <h4>Categories</h4>
-                    <div id="categories"></div>
+            <div class="row">
+                <div class="col-xs-3" style="text-align:center;">
+                    <h4>Exposure</h4>
+                    <div id="exposure"></div>
                 </div>
-                <div class='col-xs-4' style="text-align:center;">
-                    <h4>Vulnerability</h4>
-                    <div id="vulnerability"></div>
+                <div class="col-xs-3" style="text-align:center;">
+                    <h4>Hazard</h4>
+                    <div id="hazard"></div>
                 </div>
-                <div class='col-xs-3' style="text-align:center;">
-                    <h4>District</h4>
-                    <div id="region"></div>
+                <div class="col-xs-3" style="text-align:center;">
+                    <h4>Poverty</h4>
+                    <div id="poverty"></div>
+                </div>
+                <div class="col-xs-3" style="text-align:center;">
+                    <h4>Severity</h4>
+                    <div id="severity"></div>
                 </div>
             </div>
         </div>
-        <div>
+        <div class="col-xs-3 filters-container">
+            <div class="row">
+                <span class='sub-title'>Method</span>
+                <p>
+                    According to the author: "The Nepal Earthquake Severity Index is designed to provide an overview of estimated severity of impacts resulting from the earthquake of 25 April 2015. It is not a replacement for first hand damage and needs assessment information, but can support prioritisation during early stages of the response."
+                </p>
+                <p>
+                    For more information, refer to the <a href="https://docs.google.com/document/d/1x6IXahlOYYypLhlxTsB_X1CA4RVIAPKCMFewRPIvOzY/edit">technical note</a>.
+                </p>
+                <p>
+                    <a class="reset btn btn-primary btn-sm" href="https://data.hdx.rwlabs.org/dataset/nepal-earthquake-severity-index">Download Dataset on HDX</a>
+                </p>
+            </div>
+            <br>
+            <div class="row">
+                <div class="sub-title no-padding" style="padding-top=10px;">
+                    <p>Filters</p>
+                </div>
+                <div id="count-info">
+                    <p>
+                        <span class="filter-count"></span> of <span class="total-count"></span> records selected.
+                    </p>
+                </div>
+                <br>
+                <br>
+                <div>
+                    <a class="reset btn btn-primary btn-sm" href="javascript:dc.filterAll();dc.redrawAll();">Clear Selection</a>
+                </div>
+            </div>
+            <div class="row">
+                <h4>Categories</h4>
+                <div id="categories"></div>
+            </div>
+            <br>
         </div>
     </div>
-    <div class="col-xs-1"></div>
     <script type="text/javascript" src="http/js/app.js"></script>
 </body>
