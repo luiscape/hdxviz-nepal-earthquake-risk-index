@@ -141,3 +141,12 @@ h5 {
 .dc-chart g.row text {
   fill: #404040 !important;
 }
+
+.dc-chart .pie-slice {
+  fill: #404040 !important;
+}
+/*.dc-chart .axis.y,*/
+/*.dc-chart .axis.y,*/
+.dc-chart .axis.y { 
+  opacity: 0.0;
+}

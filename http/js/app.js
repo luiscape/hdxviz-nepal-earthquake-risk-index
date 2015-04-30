@@ -8,11 +8,11 @@ function print_filter(filter){
 };
 
 // Defining the chart elements.
-var categories_pie          = dc.rowChart("#categories");
+var categories_pie          = dc.pieChart("#categories");
 
 // Histograms
 var severity_bar            = dc.barChart("#severity");
-var exposure_bar            = dc.barChart("#exposure");
+var exposure_bar            = dc.lineChart("#exposure");
 var hazard_bar              = dc.barChart("#hazard");
 var poverty_bar             = dc.barChart("#poverty");
 
@@ -27,8 +27,8 @@ cf.pcode = cf.dimension(function(d){ return d.p_code });
 cf.category = cf.dimension(function(d){ return d.severity_category; });
 
 // Defining the histogram bins.
-cf.severity = cf.dimension(function(d) { d.severity_bin = Math.round(d.severity); return d.severity_bin; });
-cf.exposure = cf.dimension(function(d) { d.exposure_population_bin = Math.round(d.exposure_population); return d.exposure_population_bin; });
+cf.exposure = cf.dimension(function(d) { return d.exposure_population });
+cf.severity = cf.dimension(function(d) { d.severity_bin = Math.round(d.severity_normalized); return d.severity_bin; });
 cf.hazard = cf.dimension(function(d) { d.hazard_intensiry_bin = Math.round(d.hazard_intensiry); return d.hazard_intensiry_bin; });
 cf.poverty = cf.dimension(function(d) { d.vulnerability_poverty_bin = Math.round(d.vulnerability_poverty); return d.vulnerability_poverty_bin; });
 
@@ -43,7 +43,7 @@ var poverty = cf.poverty.group();
 
 severity_bar.width(200).height(100)
         .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -10, right: 30, bottom: 20})
+        .margins({top: 20, left: 40, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.severity)
         .group(severity)
@@ -52,18 +52,18 @@ severity_bar.width(200).height(100)
         .centerBar(true);
 
 exposure_bar.width(200).height(100)
-        .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -10, right: 30, bottom: 20})
+        .x(d3.scale.linear().domain([0,2]))
+        .margins({top: 20, left: 40, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.exposure)
         .group(exposure)
         .elasticY(true)
-        .renderVerticalGridLines(true)
-        .centerBar(true);
+        .renderArea(true)
+        .renderVerticalGridLines(true);
 
 hazard_bar.width(200).height(100)
         .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -10, right: 30, bottom: 20})
+        .margins({top: 20, left: 40, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.hazard)
         .group(hazard)
@@ -74,7 +74,7 @@ hazard_bar.width(200).height(100)
 
 poverty_bar.width(200).height(100)
         .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -10, right: 30, bottom: 20})
+        .margins({top: 20, left: 40, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.hazard)
         .group(hazard)
@@ -82,15 +82,19 @@ poverty_bar.width(200).height(100)
         .elasticY(true)
         .centerBar(true);
 
-categories_pie.width(400).height(300)
-        .margins({top: 0, left: 3, right: 10, bottom: 55})
+categories_pie.width(500).height(200)
         .dimension(cf.category)
+        .ordering(function(d){ return -d.category })
         .group(category)
-        .colors(['#de2d26', '#a50f15', '#fee5d9','#fcbba1','#fc9272','#fb6a4a'])
+        .colors(['#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026'])
         .colorDomain([0,5])
-        .filter('High')
-        .filter('Highest')
-        .colorAccessor(function(d, i){return i%5;});
+        .innerRadius(70)
+        .legend(dc.legend(['Lowest', 'Low', 'Medium-low', 'Medium-high', 'High', 'Highest']).x(2).y(30).itemHeight(13).gap(5))
+        .renderLabel(true)
+        .renderTitle(false)
+        .filter('5.High')
+        .filter('6.Highest')
+        .colorAccessor(function(d, i){return i%6;});
 
 dc.dataCount("#count-info")
     .dimension(cf)
@@ -98,10 +102,13 @@ dc.dataCount("#count-info")
 
 // Map properties.
 var center_points = [85.3, 28];
-var map_scale = 5000;
+var map_scale = 4300;
+// var margin = {top: 200, right: 0, bottom: 20, left: 0}
+// var map_width = document.getElementById("map").offsetWidth
+// var map_height = document.getElementById("map").offsetHeight;
 
 // Adm4 map.
-adm4_map.width(800).height(520)
+adm4_map.width(700).height(450)
         .dimension(cf.pcode)
         .group(pcode)
         .colors(['#ecf0f1', '#16a085'])
@@ -150,20 +157,3 @@ g.selectAll("path")
 var mapLabels = d3.selectAll("#map")
     .select("svg")
     .append("g");
-
-
-// mapLabels.selectAll('text')
-//     .data(macroregioes.features)
-//     .enter()
-//     .append("text")
-//     .attr("x", function(d,i){
-//                 return path.centroid(d)[0]-20;})
-//     .attr("y", function(d,i){
-//                 return path.centroid(d)[1];})
-//     .attr("dy", ".55em")
-//     .attr("class","nome-macroregiao")
-//     .style("font-size","12px")
-//     .attr("opacity",0.4)
-//     .text(function(d,i){
-//         return d.properties.NM_MICRO;
-//     });
