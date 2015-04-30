@@ -136,3 +136,8 @@ h5 {
   padding-left:0px !important;
   padding-right:0px !important;
 }
+
+/* chart styles */
+.dc-chart g.row text {
+  fill: #404040 !important;
+}

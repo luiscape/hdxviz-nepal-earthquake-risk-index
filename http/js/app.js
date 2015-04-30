@@ -23,27 +23,14 @@ var adm4_map                = dc.geoChoroplethChart("#map");
 var cf = crossfilter(data);
 
 // Defining the cross-filter dimensions.
-cf.pcode = cf.dimension(function(d){ return d.P_CODE });
-cf.category = cf.dimension(function(d){ return d["Severity category"]; });
+cf.pcode = cf.dimension(function(d){ return d.p_code });
+cf.category = cf.dimension(function(d){ return d.severity_category; });
 
 // Defining the histogram bins.
-cf.severity = cf.dimension(function(d) {
-    d.Bin = Math.round(d.Severity);
-    return d.Bin;
-});
-cf.exposure = cf.dimension(function(d) {
-    d.Bin = Math.round(d.Exposure_Population);
-    return d.Bin;
-});
-cf.hazard = cf.dimension(function(d) {
-    d.Bin = Math.round(d.Hazard_Intensity);
-    return d.Bin;
-});
-cf.poverty = cf.dimension(function(d) {
-    d.Bin = Math.round(d.Vulnerability_Poverty);
-    return d.Bin;
-});
-
+cf.severity = cf.dimension(function(d) { d.severity_bin = Math.round(d.severity); return d.severity_bin; });
+cf.exposure = cf.dimension(function(d) { d.exposure_population_bin = Math.round(d.exposure_population); return d.exposure_population_bin; });
+cf.hazard = cf.dimension(function(d) { d.hazard_intensiry_bin = Math.round(d.hazard_intensiry); return d.hazard_intensiry_bin; });
+cf.poverty = cf.dimension(function(d) { d.vulnerability_poverty_bin = Math.round(d.vulnerability_poverty); return d.vulnerability_poverty_bin; });
 
 // Organizing the cross-filter groups.
 var all = cf.groupAll();
@@ -56,7 +43,7 @@ var poverty = cf.poverty.group();
 
 severity_bar.width(200).height(100)
         .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -20, right: 30, bottom: 20})
+        .margins({top: 20, left: -10, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.severity)
         .group(severity)
@@ -66,7 +53,7 @@ severity_bar.width(200).height(100)
 
 exposure_bar.width(200).height(100)
         .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -20, right: 10, bottom: 20})
+        .margins({top: 20, left: -10, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.exposure)
         .group(exposure)
@@ -76,7 +63,7 @@ exposure_bar.width(200).height(100)
 
 hazard_bar.width(200).height(100)
         .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -20, right: 10, bottom: 20})
+        .margins({top: 20, left: -10, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.hazard)
         .group(hazard)
@@ -87,7 +74,7 @@ hazard_bar.width(200).height(100)
 
 poverty_bar.width(200).height(100)
         .x(d3.scale.linear().domain([0,10]))
-        .margins({top: 20, left: -20, right: 10, bottom: 20})
+        .margins({top: 20, left: -10, right: 30, bottom: 20})
         .brushOn(true)
         .dimension(cf.hazard)
         .group(hazard)
@@ -101,6 +88,7 @@ categories_pie.width(400).height(300)
         .group(category)
         .colors(['#de2d26', '#a50f15', '#fee5d9','#fcbba1','#fc9272','#fb6a4a'])
         .colorDomain([0,5])
+        .filter('High')
         .filter('Highest')
         .colorAccessor(function(d, i){return i%5;});
 
@@ -113,7 +101,7 @@ var center_points = [85.3, 28];
 var map_scale = 5000;
 
 // Adm4 map.
-adm4_map.width(800).height(450)
+adm4_map.width(800).height(520)
         .dimension(cf.pcode)
         .group(pcode)
         .colors(['#ecf0f1', '#16a085'])
@@ -162,7 +150,6 @@ g.selectAll("path")
 var mapLabels = d3.selectAll("#map")
     .select("svg")
     .append("g");
-
 
 
 // mapLabels.selectAll('text')
